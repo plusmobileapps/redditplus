@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Reddit+</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <string name="feed_item_comment">Comment</string>
+</resources>
