@@ -85,6 +85,9 @@ class RedditFeedViewHolder(private val listener: RedditFeedItemListener, view: V
         commentButton.setOnClickListener { listener.onCommentClicked(data.id) }
         shareButton.setOnClickListener { listener.onShareButtonClicked(data.id) }
         itemView.setOnClickListener { listener.onPostClicked(data.id) }
+        moreOptions.setOnClickListener {
+            listener.onMoreOptionsClicked(data.id)
+        }
     }
 
 }

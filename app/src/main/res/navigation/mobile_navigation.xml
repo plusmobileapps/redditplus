@@ -9,7 +9,18 @@
         android:id="@+id/navigation_home"
         android:name="com.plusmobileapps.reddit.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_postOptionsBottomSheet"
+            app:destination="@id/postOptionsBottomSheet" />
+        <action
+            android:id="@+id/action_navigation_home_to_postDetailFragment"
+            app:destination="@id/postDetailFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -22,4 +33,17 @@
         android:name="com.plusmobileapps.reddit.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+    <dialog
+        android:id="@+id/postOptionsBottomSheet"
+        android:name="com.plusmobileapps.reddit.ui.postoptions.PostOptionsBottomSheet"
+        android:label="PostOptionsBottomSheet" />
+    <fragment
+        android:id="@+id/postDetailFragment"
+        android:name="com.plusmobileapps.reddit.ui.postdetail.PostDetailFragment"
+        android:label="PostDetailFragment" >
+        <argument
+            android:name="POST_ID"
+            app:argType="string" />
+    </fragment>
+
 </navigation>
