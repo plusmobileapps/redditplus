@@ -15,7 +15,7 @@ import org.koin.core.parameter.parametersOf
 
 class HomeFragment : Fragment() {
 
-    private val homeViewModel by viewModel<HomeViewModel> { parametersOf(HomeFeedRouter(findNavController())) }
+    private val homeViewModel by viewModel<HomeViewModel> { parametersOf(HomeFeedRouter(findNavController(), requireActivity())) }
 
     override fun onCreateView(
         inflater: LayoutInflater,

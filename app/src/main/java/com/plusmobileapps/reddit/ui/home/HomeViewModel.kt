@@ -40,7 +40,8 @@ class HomeViewModel(private val router: HomeFeedRouter) : ViewModel(), RedditFee
     }
 
     override fun onPostClicked(id: String) {
-        router.openPostDetails(id)
+        val post = feedRepository.getPost(id) ?: return
+        router.openPostDetails(post.permaLink)
     }
 
     override fun onUpVoteClicked(id: String) {
@@ -53,5 +54,7 @@ class HomeViewModel(private val router: HomeFeedRouter) : ViewModel(), RedditFee
     }
 
     override fun onShareButtonClicked(id: String) {
+        val post = feedRepository.getPost(id) ?: return
+        router.openShareSheet(post.permaLink)
     }
 }

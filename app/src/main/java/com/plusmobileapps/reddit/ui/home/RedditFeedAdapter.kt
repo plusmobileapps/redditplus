@@ -1,5 +1,6 @@
 package com.plusmobileapps.reddit.ui.home
 
+import android.os.Build.VERSION.SDK_INT
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +11,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.ImageLoader
 import coil.api.load
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
 import com.plusmobileapps.reddit.R
+import com.plusmobileapps.reddit.util.gifImageLoader
 
 data class RedditFeedItem(
     val id: String,
@@ -60,12 +65,14 @@ class RedditFeedAdapter(private val listener: RedditFeedItemListener) :
 class RedditFeedViewHolder(private val listener: RedditFeedItemListener, view: View) :
     RecyclerView.ViewHolder(view) {
 
+    val imageLoader = itemView.context.gifImageLoader
+
     private val subredditImage: ImageView = itemView.findViewById(R.id.feed_item_subreddit_image)
     private val subreddit: TextView = itemView.findViewById(R.id.feed_item_subreddit_name)
     private val moreOptions: ImageButton = itemView.findViewById(R.id.feed_item_more_options)
     private val username: TextView = itemView.findViewById(R.id.feed_item_user_name)
     private val postTitle: TextView = itemView.findViewById(R.id.feed_item_title)
-    private val description: TextView = itemView.findViewById(R.id.feed_item_description)
+    private val description: ImageView = itemView.findViewById(R.id.feed_item_description)
     private val downVote: ImageButton = itemView.findViewById(R.id.feed_item_down_vote)
     private val upVote: ImageButton = itemView.findViewById(R.id.feed_item_up_button)
     private val karmaCount: TextView = itemView.findViewById(R.id.feed_item_karma_count)
@@ -77,7 +84,7 @@ class RedditFeedViewHolder(private val listener: RedditFeedItemListener, view: V
         subreddit.text = data.subreddit
         username.text = data.username
         postTitle.text = data.title
-        description.text = data.description
+        description.load(data.description, imageLoader = imageLoader)
         karmaCount.text = data.karmaCount
         moreOptions.setOnClickListener { listener.onMoreOptionsClicked(data.id) }
         downVote.setOnClickListener { listener.onDownVoteClicked(data.id) }

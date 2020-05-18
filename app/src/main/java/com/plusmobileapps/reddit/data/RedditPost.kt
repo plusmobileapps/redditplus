@@ -8,5 +8,6 @@ data class RedditPost(
     val timePosted: String,
     val title: String,
     val description: String,
-    val karmaCount: String
+    val karmaCount: String,
+    val permaLink: String
 )
