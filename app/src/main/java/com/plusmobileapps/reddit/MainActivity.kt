@@ -2,12 +2,17 @@ package com.plusmobileapps.reddit
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.plusmobileapps.reddit.data.user.UserRepository
+import org.koin.android.ext.android.get
+import org.koin.android.ext.android.getKoin
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,6 +40,11 @@ class MainActivity : AppCompatActivity() {
                 else -> hideBottomNavigation()
             }
         }
+
+        val button = findViewById<Button>(R.id.fab)
+        get<UserRepository>().user.observe(this, Observer {
+            button.text = if (it == null) "Sign in" else "Sign out"
+        })
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.plusmobileapps.reddit.data.FeedDataSource
+import com.plusmobileapps.reddit.data.user.User
+import com.plusmobileapps.reddit.data.user.UserRepository
 import org.koin.core.KoinComponent
 import org.koin.core.get
 
@@ -16,8 +18,10 @@ class HomeViewModel(private val router: HomeFeedRouter) : ViewModel(), RedditFee
     }
 
     private val feedRepository = get<FeedDataSource>()
+    private val userRepository = get<UserRepository>()
 
     val text: LiveData<String> = _text
+    val user: LiveData<User> = userRepository.user
     val feed: LiveData<List<RedditFeedItem>>
         get() = Transformations.map(feedRepository.feed) {
             it.map { redditPost ->
