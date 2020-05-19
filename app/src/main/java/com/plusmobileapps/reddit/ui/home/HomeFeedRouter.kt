@@ -2,6 +2,7 @@ package com.plusmobileapps.reddit.ui.home
 
 import android.app.Activity
 import android.content.Intent
+import android.widget.ImageView
 import androidx.navigation.NavController
 import com.plusmobileapps.reddit.ui.postdetail.navigateToPostDetailFragment
 import com.plusmobileapps.reddit.ui.postoptions.navigateToPostOptionsBottomsheet
@@ -10,7 +11,7 @@ class HomeFeedRouter(private val navController: NavController, private val activ
 
     fun openPostOptions(postId: String) = navController.navigateToPostOptionsBottomsheet(postId)
 
-    fun openPostDetails(postId: String) = navController.navigateToPostDetailFragment(postId)
+    fun openPostDetails(postId: String, imageview: ImageView) = navController.navigateToPostDetailFragment(postId, imageview)
 
     fun openShareSheet(link: String) {
         val sendIntent: Intent = Intent().apply {

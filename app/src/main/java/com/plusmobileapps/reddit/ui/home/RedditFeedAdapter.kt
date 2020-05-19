@@ -1,6 +1,5 @@
 package com.plusmobileapps.reddit.ui.home
 
-import android.os.Build.VERSION.SDK_INT
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,10 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.ImageLoader
 import coil.api.load
-import coil.decode.GifDecoder
-import coil.decode.ImageDecoderDecoder
 import com.plusmobileapps.reddit.R
 import com.plusmobileapps.reddit.util.gifImageLoader
 
@@ -31,7 +27,7 @@ data class RedditFeedItem(
 
 interface RedditFeedItemListener {
     fun onMoreOptionsClicked(id: String)
-    fun onPostClicked(id: String)
+    fun onPostClicked(id: String, imageview: ImageView)
     fun onUpVoteClicked(id: String)
     fun onDownVoteClicked(id: String)
     fun onCommentClicked(id: String)
@@ -85,13 +81,14 @@ class RedditFeedViewHolder(private val listener: RedditFeedItemListener, view: V
         username.text = data.username
         postTitle.text = data.title
         description.load(data.description, imageLoader = imageLoader)
+        description.transitionName = "$adapterPosition-${data.id}"
         karmaCount.text = data.karmaCount
         moreOptions.setOnClickListener { listener.onMoreOptionsClicked(data.id) }
         downVote.setOnClickListener { listener.onDownVoteClicked(data.id) }
         upVote.setOnClickListener { listener.onUpVoteClicked(data.id) }
         commentButton.setOnClickListener { listener.onCommentClicked(data.id) }
         shareButton.setOnClickListener { listener.onShareButtonClicked(data.id) }
-        itemView.setOnClickListener { listener.onPostClicked(data.id) }
+        itemView.setOnClickListener { listener.onPostClicked(data.id, description) }
         moreOptions.setOnClickListener {
             listener.onMoreOptionsClicked(data.id)
         }

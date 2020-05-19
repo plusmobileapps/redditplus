@@ -1,14 +1,13 @@
 package com.plusmobileapps.reddit.ui.home
 
+import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.plusmobileapps.reddit.data.FeedDataSource
-import com.plusmobileapps.reddit.data.FeedRepository
 import org.koin.core.KoinComponent
 import org.koin.core.get
-import org.koin.core.inject
 
 class HomeViewModel(private val router: HomeFeedRouter) : ViewModel(), RedditFeedItemListener, KoinComponent {
 
@@ -39,9 +38,9 @@ class HomeViewModel(private val router: HomeFeedRouter) : ViewModel(), RedditFee
         router.openPostOptions(id)
     }
 
-    override fun onPostClicked(id: String) {
+    override fun onPostClicked(id: String, imageview: ImageView) {
         val post = feedRepository.getPost(id) ?: return
-        router.openPostDetails(post.permaLink)
+        router.openPostDetails(post.permaLink, imageview)
     }
 
     override fun onUpVoteClicked(id: String) {

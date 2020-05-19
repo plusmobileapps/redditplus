@@ -15,11 +15,7 @@
             app:destination="@id/postOptionsBottomSheet" />
         <action
             android:id="@+id/action_navigation_home_to_postDetailFragment"
-            app:destination="@id/postDetailFragment"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_left"
-            app:popEnterAnim="@anim/enter_from_left"
-            app:popExitAnim="@anim/exit_to_right" />
+            app:destination="@id/postDetailFragment"    />
     </fragment>
 
     <fragment
