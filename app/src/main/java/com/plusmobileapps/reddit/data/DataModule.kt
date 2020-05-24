@@ -28,4 +28,5 @@ val dataModule = module {
             }
         }
     }
+    factory { (username: String) -> AuthHttpClient(username) }
 }

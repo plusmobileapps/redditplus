@@ -1,8 +1,10 @@
 package com.plusmobileapps.reddit
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -21,8 +23,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        checkForUserAuthorizationIntent()
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
-
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -49,6 +51,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         return findNavController(R.id.nav_host_fragment).navigateUp()
+    }
+
+    private fun checkForUserAuthorizationIntent() {
+        val data: Uri? = intent?.data
+        val state = data?.getQueryParameter("state")
+        val token = data?.getQueryParameter("code")
+        val error = data?.getQueryParameter("error")
+        get<UserRepository>().onUserAuthorized(state = state, token = token, error = error)
+        Toast.makeText(this, "token: $token", Toast.LENGTH_LONG).show()
     }
 
     private fun hideBottomNavigation() {

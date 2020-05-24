@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.plusmobileapps.reddit.SingleLiveEvent
 import com.plusmobileapps.reddit.data.FeedDataSource
 import com.plusmobileapps.reddit.data.user.User
 import com.plusmobileapps.reddit.data.user.UserRepository
@@ -19,6 +20,9 @@ class HomeViewModel(private val router: HomeFeedRouter) : ViewModel(), RedditFee
 
     private val feedRepository = get<FeedDataSource>()
     private val userRepository = get<UserRepository>()
+
+    private val _urlLauncher = SingleLiveEvent<String>()
+    val urlLauncher: LiveData<String> get() = _urlLauncher
 
     val text: LiveData<String> = _text
     val user: LiveData<User> = userRepository.user
@@ -48,6 +52,7 @@ class HomeViewModel(private val router: HomeFeedRouter) : ViewModel(), RedditFee
     }
 
     override fun onUpVoteClicked(id: String) {
+        _urlLauncher.value = userRepository.authUrl
     }
 
     override fun onDownVoteClicked(id: String) {
